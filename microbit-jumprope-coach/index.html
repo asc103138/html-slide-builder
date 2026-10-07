@@ -210,6 +210,81 @@
       cursor: pointer;
       font-family: inherit;
     }
+
+    /* === 謝敦元老師語音導覽播放器控制條 === */
+    .audio-coach-bar {
+      position: fixed;
+      bottom: 22px;
+      left: 24px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(13, 17, 23, 0.88);
+      border: 1px solid var(--accent2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 12px rgba(79, 195, 247, 0.35);
+      border-radius: 30px;
+      padding: 6px 16px 6px 10px;
+      backdrop-filter: blur(10px);
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      transition: all 0.3s ease;
+    }
+    .audio-coach-bar:hover {
+      box-shadow: 0 6px 24px rgba(79, 195, 247, 0.5);
+    }
+    .coach-avatar-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #ff7043);
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      outline: none;
+      transition: transform 0.2s ease;
+    }
+    .coach-avatar-btn:hover {
+      transform: scale(1.08);
+    }
+    .coach-info {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .coach-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+    }
+    .coach-status {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .audio-coach-bar.playing .coach-status {
+      color: var(--success);
+      font-weight: 700;
+    }
+    .audio-coach-bar.playing .coach-avatar-btn {
+      animation: pulse 1.2s infinite;
+      border-color: var(--success);
+    }
+    .auto-play-toggle {
+      font-size: 11px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 6px;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255,255,255,0.18);
+      cursor: pointer;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
@@ -739,6 +814,20 @@
   </div>
 </div>
 
+<!-- 謝敦元老師語音導覽浮動控制條 -->
+<div class="audio-coach-bar" id="audio-coach-bar">
+  <button class="coach-avatar-btn" id="coach-play-btn" title="播放/暫停 謝敦元老師語音導覽">🎙️</button>
+  <div class="coach-info">
+    <span class="coach-name">謝敦元老師 語音教學</span>
+    <span class="coach-status" id="coach-status">點擊播放本頁導覽</span>
+  </div>
+  <label class="auto-play-toggle">
+    <input type="checkbox" id="coach-autoplay-chk" checked />
+    自動導覽
+  </label>
+</div>
+<audio id="coach-audio" preload="auto"></audio>
+
 <!-- Reveal.js JS -->
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
@@ -769,6 +858,77 @@
       if (divider) divider.style.left = v + '%';
     });
   }
+
+  // === 謝敦元老師語音導覽控制邏輯 ===
+  const coachAudio = document.getElementById('coach-audio');
+  const coachBar = document.getElementById('audio-coach-bar');
+  const coachPlayBtn = document.getElementById('coach-play-btn');
+  const coachStatus = document.getElementById('coach-status');
+  const autoPlayChk = document.getElementById('coach-autoplay-chk');
+
+  function getSlideAudioUrl(slideIndex) {
+    const num = String(slideIndex + 1).padStart(2, '0');
+    return `audio/slide_${num}.mp3`;
+  }
+
+  function playSlideAudio(slideIndex) {
+    const audioUrl = getSlideAudioUrl(slideIndex);
+    coachAudio.src = audioUrl;
+    coachAudio.play().then(() => {
+      coachBar.classList.add('playing');
+      coachPlayBtn.textContent = '⏸️';
+      coachStatus.textContent = `第 ${slideIndex + 1} 頁 教學講解中...`;
+    }).catch(err => {
+      // 瀏覽器未被使用者互動授權自動播放
+      coachBar.classList.remove('playing');
+      coachPlayBtn.textContent = '▶️';
+      coachStatus.textContent = '點擊播放本頁導覽';
+    });
+  }
+
+  function pauseSlideAudio() {
+    coachAudio.pause();
+    coachBar.classList.remove('playing');
+    coachPlayBtn.textContent = '▶️';
+    coachStatus.textContent = '已暫停導覽';
+  }
+
+  coachPlayBtn.addEventListener('click', () => {
+    if (coachAudio.paused) {
+      if (!coachAudio.src || coachAudio.src === '') {
+        const idx = Reveal.getIndices().h;
+        playSlideAudio(idx);
+      } else {
+        coachAudio.play().then(() => {
+          coachBar.classList.add('playing');
+          coachPlayBtn.textContent = '⏸️';
+          coachStatus.textContent = '教學講解中...';
+        });
+      }
+    } else {
+      pauseSlideAudio();
+    }
+  });
+
+  coachAudio.addEventListener('ended', () => {
+    coachBar.classList.remove('playing');
+    coachPlayBtn.textContent = '▶️';
+    coachStatus.textContent = '本頁導覽完畢';
+  });
+
+  // 監聽 Reveal 切頁事件，同步切換該頁導覽音訊
+  Reveal.on('slidechanged', event => {
+    const currentIdx = event.indexh;
+    if (autoPlayChk && autoPlayChk.checked) {
+      playSlideAudio(currentIdx);
+    } else {
+      coachAudio.pause();
+      coachAudio.src = getSlideAudioUrl(currentIdx);
+      coachBar.classList.remove('playing');
+      coachPlayBtn.textContent = '▶️';
+      coachStatus.textContent = `點擊播放第 ${currentIdx + 1} 頁導覽`;
+    }
+  });
 </script>
 
 <!-- Firebase 互動元件 (文字雲 & 投票) -->

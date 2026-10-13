@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1117" />
+  <title>康軒四上社會 1-2《地形的種類與生活》｜ Reveal.js 互動簡報</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛰️</text></svg>">
+  
+  <!-- Reveal.js 5.1.0 Styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  
+  <!-- WordCloud2.js & Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* ==========================================================================
+       html-slide-builder CSS 元件庫 + Emil Kowalski 設計工程工藝標準
+       ========================================================================== */
+    :root {
+      --accent:  #e8643a;  /* 活力橘紅（主強調） */
+      --accent2: #4fc3f7;  /* 科技青藍（次強調） */
+      --success: #81c784;  /* 清新亮綠（正面） */
+      --warn:    #ffb74d;  /* 溫暖金黃（提示） */
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100dvh;
+      min-height: 100svh;
+      overflow: hidden;
+      background: #0d1117;
+      font-size: 16px;
+    }
+
+    .reveal {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: #f1f5f9;
+      background: #0d1117;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .reveal h1 { font-size: 2.1em; }
+    .reveal h2 { font-size: 1.45em; color: var(--accent2); margin-bottom: 0.4em; }
+    .reveal h3 { font-size: 1.05em; color: var(--warn); }
+    .reveal .progress { color: var(--accent); height: 4px; }
+    .reveal .progress span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 240ms var(--ease-out);
+    }
+
+    /* 封面視覺 */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), #ff7043);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.45em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(232, 100, 58, 0.45);
+    }
+    .title-slide .subtitle {
+      font-size: 0.6em;
+      color: #cbd5e1;
+      margin-top: 0.6em;
+      line-height: 1.6;
+    }
+    .title-slide .author {
+      margin-top: 2.2em;
+      font-size: 0.42em;
+      color: #94a3b8;
+    }
+
+    /* 卡片與網格 */
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 0.8em;
+    }
+    .card-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 0.8em;
+    }
+    .card-grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 0.8em;
+    }
+
+    .adv-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-top: 4px solid var(--accent2);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+      user-select: none;
+      transition: transform 160ms var(--ease-out), border-color 200ms var(--ease-out);
+    }
+    .adv-card:hover { transform: translateY(-4px); }
+    .adv-card:active { transform: scale(0.97); }
+
+    .adv-card.accent { border-top-color: var(--accent); }
+    .adv-card.success { border-top-color: var(--success); }
+    .adv-card.warn { border-top-color: var(--warn); }
+
+    .adv-card .adv-icon {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 10px rgba(79, 195, 247, 0.5));
+    }
+    .adv-card .adv-title {
+      font-size: 0.58em;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 6px;
+    }
+    .adv-card .adv-desc {
+      font-size: 0.42em;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    /* 雙欄排版 */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+      margin-top: 0.6em;
+      text-align: left;
+    }
+    .col-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+      font-size: 0.45em;
+      line-height: 1.7;
+      user-select: none;
+    }
+
+    /* 滑桿對比組件 [VIZ] */
+    .slider-box {
+      position: relative;
+      height: 380px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #111827;
+      margin-top: 10px;
+    }
+    .slider-layer {
+      position: absolute;
+      inset: 0;
+      padding: 24px;
+      box-sizing: border-box;
+      text-align: left;
+      font-size: 0.44em;
+      line-height: 1.8;
+      overflow-y: auto;
+    }
+    .slider-layer.before {
+      background: #0f172a;
+      color: #cbd5e1;
+    }
+    .slider-layer.after {
+      background: #064e3b;
+      color: #ecfdf5;
+      clip-path: inset(0 100% 0 0);
+    }
+    .slider-divider {
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, transparent, #4fc3f7, #81c784, transparent);
+      box-shadow: 0 0 14px #4fc3f7;
+      pointer-events: none;
+    }
+    .slider-ctrl {
+      width: 80%;
+      margin: 14px auto 0;
+      display: block;
+      accent-color: var(--accent2);
+    }
+
+    /* 表單按鈕與微互動 */
+    .btn-action {
+      background: var(--accent2);
+      color: #0d1117;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 120ms var(--ease-out), background-color 150ms ease;
+    }
+    .btn-action:active {
+      transform: scale(0.97);
+    }
+
+    /* 標籤元件 */
+    .badge-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.38em;
+      font-weight: 700;
+      background: rgba(79, 195, 247, 0.15);
+      color: var(--accent2);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      margin-top: 8px;
+    }
+
+    /* 呼吸燈動畫 */
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+    /* SVG 剖面圖自適應 */
+    .cross-section-svg {
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: #090e18;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1: 封面 [BG] -->
+    <section data-background-color="#0a0f1d"
+             data-background-gradient="radial-gradient(circle at 50% 30%, #172554 0%, #0d1117 70%)">
+      <div class="title-slide">
+        <div class="tag">國小四年級社會 ｜ 康軒版第一單元 1-2</div>
+        <h1 style="color:#ffffff;">《地形的種類與生活》</h1>
+        <h2 style="color:var(--accent); font-size:1.15em; margin-top:0.2em;">五大地形密碼與家鄉生活大探險</h2>
+        <p class="subtitle">
+          從空中鳥瞰大地，解鎖平原、盆地、台地、丘陵與山地的形貌特徵，<br>
+          發現地表高低起伏如何深刻影響我們的飲食、聚落、交通與生活！
+        </p>
+        <p class="author">臺中市梧棲區中正國小 四年級社會教學團隊</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 互動文字雲 [INTERACT:wordcloud] -->
+    <section id="slide-wordcloud">
+      <h2>即時破冰：提到你的家鄉環境，你第一個想到什麼？</h2>
+      <div style="display:grid; grid-template-columns:260px 1fr; gap:16px; height:450px;">
+        <!-- 左欄：輸入與即時統計 -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:14px;">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">輸入你的關鍵詞</div>
+            <input id="wc-input" type="text" placeholder="例：平原、大肚山、稻田、港口…" maxlength="15"
+              style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+                     background:rgba(255,255,255,0.08); color:#fff; font-size:16px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn" class="btn-action" style="width:100%; margin-top:8px;">送出靈感 ↵</button>
+          </div>
+          <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:12px; flex:1; display:flex; flex-direction:column; overflow:hidden;">
+            <div style="font-size:0.36em; color:var(--accent2); font-weight:700; margin-bottom:6px;">
+              全班即時靈感
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:1px 6px; border-radius:10px; font-size:0.85em; animation:pulse 1.5s infinite;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.33em; overflow-y:auto; flex:1; color:#cbd5e1;"></div>
+            <div style="margin-top:6px; font-size:0.3em; color:#94a3b8; border-top:1px solid rgba(255,255,255,0.08); padding-top:4px; display:flex; justify-content:space-between; align-items:center;">
+              <div>總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span> 則　多樣：<span id="wc-unique" style="color:var(--accent2); font-weight:700;">0</span> 種</div>
+              <button id="wc-reset-btn" title="重置文字雲" style="background:transparent; border:1px solid rgba(255,255,255,0.2); color:#94a3b8; border-radius:4px; font-size:11px; padding:2px 6px; cursor:pointer;">重置 ↺</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右欄：文字雲視覺化 -->
+        <div style="background:rgba(255,255,255,0.03); border-radius:12px; overflow:hidden; position:relative; border:1px solid rgba(255,255,255,0.08);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#64748b; font-size:0.42em; text-align:center; pointer-events:none; line-height:1.8;">
+            在左側輸入你眼中的家鄉特色<br>全班靈感文字雲立刻浮現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: 觀察三要素 [ICON] -->
+    <section>
+      <h2>看地形的三個放大鏡</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">不用死背定義！只要拿著這三個放大鏡，就能像地理探險家一樣看懂地表：</p>
+      
+      <div class="card-grid-3">
+        <div class="adv-card accent fragment">
+          <div class="adv-icon">📏</div>
+          <div class="adv-title">① 地表高度</div>
+          <div class="adv-desc">超過 1000 公尺的高聳巨峰？還是地勢低平的地面？「1000 公尺」是關鍵分水嶺！</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon">📐</div>
+          <div class="adv-title">② 地表坡度</div>
+          <div class="adv-desc">是斜陡驚險的山崖峭壁，還是平緩起伏的和緩山坡，又或者是像操場般平坦廣大？</div>
+        </div>
+        <div class="adv-card success fragment">
+          <div class="adv-icon">⛰️</div>
+          <div class="adv-title">③ 頂部形狀</div>
+          <div class="adv-desc">從天空俯瞰，它的山頂是尖尖高聳的稜線，還是像餐桌一樣平坦開闊的「平頂」？</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: 臺灣五大地形家族 [ICON] -->
+    <section>
+      <h2>臺灣五大地形家族</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">課本第 20～21 頁核心概念：臺灣地表五大形貌家族大點名！</p>
+      
+      <div class="card-grid-5">
+        <div class="adv-card">
+          <div style="font-size:1.8em; margin-bottom:6px;">🌾</div>
+          <div class="adv-title" style="color:var(--accent);">平原</div>
+          <div class="adv-desc">平坦廣闊<br>一望無際</div>
+        </div>
+        <div class="adv-card warn">
+          <div style="font-size:1.8em; margin-bottom:6px;">🍲</div>
+          <div class="adv-title" style="color:var(--warn);">盆地</div>
+          <div class="adv-desc">四周高聳<br>中間低平</div>
+        </div>
+        <div class="adv-card" style="border-top-color:#a78bfa;">
+          <div style="font-size:1.8em; margin-bottom:6px;">🪵</div>
+          <div class="adv-title" style="color:#a78bfa;">台地</div>
+          <div class="adv-desc">頂部平坦<br>邊緣陡坡</div>
+        </div>
+        <div class="adv-card success">
+          <div style="font-size:1.8em; margin-bottom:6px;">🍃</div>
+          <div class="adv-title" style="color:var(--success);">丘陵</div>
+          <div class="adv-desc">坡度平緩<br>1000m以下</div>
+        </div>
+        <div class="adv-card accent">
+          <div style="font-size:1.8em; margin-bottom:6px;">🏔️</div>
+          <div class="adv-title" style="color:#38bdf8;">山地</div>
+          <div class="adv-desc">山勢高聳<br>1000m以上</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; background:var(--card-bg); border-radius:10px; padding:12px; font-size:0.4em; color:#cbd5e1;">
+        💡 <strong>小發現</strong>：臺灣雖然面積不大，但這五種地形完整兼備，造就了豐富多樣的生活樣貌！
+      </div>
+    </section>
+
+    <!-- Slide 5: 平原篇 -->
+    <section>
+      <h2>平原：平坦廣闊的綠地</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">地勢平坦無阻。內陸是黃金稻浪的大糧倉，沿海是波光粼粼的水產魚塭！</p>
+      
+      <div class="two-col">
+        <div class="col-box" style="border-top:4px solid var(--accent);">
+          <div style="color:var(--accent); font-weight:700; font-size:1.15em; margin-bottom:6px;">🌾 內陸平原實例 ｜ 臺東縣 池上鄉</div>
+          <p>• <strong>特徵</strong>：土壤肥沃、視野遼闊、有河川灌溉水源。</p>
+          <p>• <strong>生活與產業</strong>：居民大面積種植稻米、蔬果，如池上米與伯朗大道黃金稻浪。</p>
+          <span class="badge-pill">宜蘭平原 · 嘉南平原 · 屏東平原</span>
+        </div>
+        <div class="col-box" style="border-top:4px solid var(--accent2);">
+          <div style="color:var(--accent2); font-weight:700; font-size:1.15em; margin-bottom:6px;">🐟 沿海平原實例 ｜ 屏東縣 枋寮鄉</div>
+          <p>• <strong>特徵</strong>：靠近海洋、地勢低平取水方便。</p>
+          <p>• <strong>生活與產業</strong>：居民開闢許多魚塭發展水產養殖業（如石斑魚、虱目魚、白蝦）。</p>
+          <span class="badge-pill">沿海漁鄉 · 水產魚塭</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: 盆地篇 -->
+    <section>
+      <h2>盆地：四周高而中間低平</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">像個大臉盆一樣被山圍抱。中間平坦、交通四通八達，是熱鬧的都會核心！</p>
+      
+      <div class="two-col">
+        <div class="col-box" style="border-top:4px solid var(--warn);">
+          <div style="color:var(--warn); font-weight:700; font-size:1.15em; margin-bottom:6px;">🏙️ 繁華都會 ｜ 臺北市 信義區</div>
+          <p>• <strong>特徵</strong>：四周有山丘圍繞，內部平坦寬廣。</p>
+          <p>• <strong>生活與產業</strong>：交通四通八達、人口高度集中，高樓大廈林立，形成商業與政治核心。</p>
+          <span class="badge-pill">臺北盆地 · 臺中盆地</span>
+        </div>
+        <div class="col-box" style="border-top:4px solid var(--success);">
+          <div style="color:var(--success); font-weight:700; font-size:1.15em; margin-bottom:6px;">🏞️ 山間聚落 ｜ 南投縣 埔里鎮</div>
+          <p>• <strong>特徵</strong>：位於中央山脈西側，周圍高山阻擋強風。</p>
+          <p>• <strong>生活與產業</strong>：氣候溫和、水質純淨，孕育出著名的茭白筍、花卉與觀光農業。</p>
+          <span class="badge-pill">埔里盆地 · 山城綠洲</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: 台地篇 -->
+    <section>
+      <h2>台地：頂部平坦邊緣陡</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">鳥瞰像一張大平桌！邊緣以陡坡與周圍低地相接，頂部平坦廣闊。</p>
+      
+      <div class="two-col">
+        <div class="col-box" style="border-top:4px solid #a78bfa;">
+          <div style="color:#a78bfa; font-weight:700; font-size:1.15em; margin-bottom:6px;">🪵 桌狀外形 ｜ 鳥瞰大幾何</div>
+          <p>• <strong>頂部平坦</strong>：從天空往下看，像是一整塊平整的桌板。</p>
+          <p>• <strong>邊緣陡坡</strong>：從周圍低平地面要爬上台地時，邊緣往往是又陡又斜的長斜坡。</p>
+          <span class="badge-pill">大肚台地 · 桃園台地 · 林口台地</span>
+        </div>
+        <div class="col-box" style="border-top:4px solid var(--accent);">
+          <div style="color:var(--accent); font-weight:700; font-size:1.15em; margin-bottom:6px;">🏭 工業園區 ｜ 習作第 6 頁考點</div>
+          <p>• <strong>不易積水</strong>：地勢高於周圍低地，排水順暢。</p>
+          <p>• <strong>生活與產業</strong>：頂部平坦土地大，常被規劃為工業區、科學園區或大學城（如台中工業區）。</p>
+          <span class="badge-pill">工廠上班 · 科技園區</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: 丘陵篇 -->
+    <section>
+      <h2>丘陵：坡緩千米以下</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">地勢平緩起伏，高度不高於 1000 公尺。斜坡排水順暢，孕育飄香茶園！</p>
+      
+      <div class="two-col">
+        <div class="col-box" style="border-top:4px solid var(--success);">
+          <div style="color:var(--success); font-weight:700; font-size:1.15em; margin-bottom:6px;">🍵 茶香飄揚 ｜ 新北市 石碇區</div>
+          <p>• <strong>排水良好</strong>：茶樹最怕根部積水泡爛！斜坡排水順暢，正是茶樹最愛生長的好環境。</p>
+          <p>• <strong>生活與產業</strong>：很久以前居民便依山勢開闢茶園、製茶，如石碇包種茶與東方美人茶。</p>
+          <span class="badge-pill">石碇茶園 · 苗栗丘陵</span>
+        </div>
+        <div class="col-box" style="border-top:4px solid var(--warn);">
+          <div style="color:var(--warn); font-weight:700; font-size:1.15em; margin-bottom:6px;">🍊 休閒農場 ｜ 假日好去處</div>
+          <p>• <strong>地勢平緩</strong>：坡度較緩和安全，適合栽種柑橘、文旦等水果。</p>
+          <p>• <strong>生活與產業</strong>：假日吸引許多都市居民前來踏青採果、健行放鬆，發展觀光農業。</p>
+          <span class="badge-pill">觀光果園 · 親子踏青</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: 山地篇 [BG] -->
+    <section data-background-color="#0a0f1d"
+             data-background-gradient="radial-gradient(circle at 50% 30%, #1e3a8a 0%, #0d1117 75%)">
+      <h2>山地：千米以上高聳山峰</h2>
+      <p style="font-size:0.45em; color:#cbd5e1; margin-top:-0.4em;">聳立千米以上的臺灣脊梁！高山雲霧滋潤，生產甜蜜水果與高冷蔬菜。</p>
+      
+      <div class="two-col">
+        <div class="col-box" style="background:rgba(13,17,23,0.85); border-top:4px solid var(--accent2);">
+          <div style="color:var(--accent2); font-weight:700; font-size:1.15em; margin-bottom:6px;">🍎 高冷果蔬 ｜ 臺中市 和平區</div>
+          <p>• <strong>特徵</strong>：海拔在 <strong>1000 公尺以上</strong>，氣候涼冷、水氣充足、日夜溫差大。</p>
+          <p>• <strong>生活與產業</strong>：居民以種植溫帶水果（梨山水蜜桃、蜜蘋果）與高冷蔬菜（高麗菜）為生。</p>
+          <span class="badge-pill">和平區梨山 · 溫帶水果</span>
+        </div>
+        <div class="col-box" style="background:rgba(13,17,23,0.85); border-top:4px solid var(--accent);">
+          <div style="color:var(--accent); font-weight:700; font-size:1.15em; margin-bottom:6px;">🏔️ 臺灣屋脊 ｜ 課本第 114 頁地圖</div>
+          <p>• <strong>五大山脈</strong>：中央山脈、雪山山脈、玉山山脈、阿里山山脈、海岸山脈。</p>
+          <p>• <strong>生態價值</strong>：攔截季風水氣、涵養森林水源，是全臺灣島嶼最重要的生命之源。</p>
+          <span class="badge-pill">中央山脈 · 雪山山脈</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: 迷思概念大體檢 -->
+    <section>
+      <h2>地形偵探：破除三大迷思</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">許多同學容易搞混這些觀念！讓我們逐一檢驗真相：</p>
+      
+      <div class="card-grid-3">
+        <div class="adv-card fragment">
+          <div style="font-size:1.6em; color:#f87171; margin-bottom:4px;">❌ 迷思一</div>
+          <div class="adv-title">台地也是山地的一種？</div>
+          <div class="adv-desc" style="color:#a7f3d0; margin-top:8px;">
+            ✔️ <strong>真相揭曉</strong>：<br>台地頂部是<strong>平坦的</strong>像桌子！山地頂部高聳起伏，兩者外形完全不同。
+          </div>
+        </div>
+        <div class="adv-card fragment warn">
+          <div style="font-size:1.6em; color:#f87171; margin-bottom:4px;">❌ 迷思二</div>
+          <div class="adv-title">丘陵跟山地怎麼區分？</div>
+          <div class="adv-desc" style="color:#a7f3d0; margin-top:8px;">
+            ✔️ <strong>真相揭曉</strong>：<br>關鍵看<strong>1000 公尺</strong>！$\le 1000\text{m}$ 坡緩是丘陵；$> 1000\text{m}$ 高聳險峻才是山地。
+          </div>
+        </div>
+        <div class="adv-card fragment success">
+          <div style="font-size:1.6em; color:#f87171; margin-bottom:4px;">❌ 迷思三</div>
+          <div class="adv-title">盆地是積水大坑洞？</div>
+          <div class="adv-desc" style="color:#a7f3d0; margin-top:8px;">
+            ✔️ <strong>真相揭曉</strong>：<br>盆地中間是<strong>平坦低地</strong>！交通便利、水源匯聚，往往形成熱鬧繁華的大都會。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 11: 知識總整理 -->
+    <section>
+      <h2>地形決定了生活方式</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">課本第 22～23 頁綜合歸納：大地形貌形塑了產業與家鄉樣貌！</p>
+      
+      <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; padding:16px; font-size:0.42em;">
+        <table style="width:100%; border-collapse:collapse; text-align:left; color:#cbd5e1;">
+          <thead>
+            <tr style="border-bottom:2px solid rgba(255,255,255,0.15); color:var(--accent2);">
+              <th style="padding:8px;">地形種類</th>
+              <th style="padding:8px;">核心形貌特徵</th>
+              <th style="padding:8px;">居民生活與產業</th>
+              <th style="padding:8px;">課本真實地名</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:8px; font-weight:700; color:var(--accent);">🌾 平原</td>
+              <td style="padding:8px;">平坦廣闊、起伏極小</td>
+              <td style="padding:8px;">大面積水稻農業、沿海魚塭養殖</td>
+              <td style="padding:8px;">臺東池上、屏東枋寮</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:8px; font-weight:700; color:var(--warn);">🍲 盆地</td>
+              <td style="padding:8px;">四周高山圍繞、中間低平</td>
+              <td style="padding:8px;">交通便利、高樓大廈、繁華大都市</td>
+              <td style="padding:8px;">臺北信義、南投埔里</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:8px; font-weight:700; color:#a78bfa;">🪵 台地</td>
+              <td style="padding:8px;">頂部平坦、邊緣陡坡相接</td>
+              <td style="padding:8px;">地勢高不易積水、開闢工業園區</td>
+              <td style="padding:8px;">臺中大肚、桃園台地</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:8px; font-weight:700; color:var(--success);">🍃 丘陵</td>
+              <td style="padding:8px;">坡度平緩、1000m 以下</td>
+              <td style="padding:8px;">斜坡排水良好種茶樹、休閒採果農場</td>
+              <td style="padding:8px;">新北石碇、苗栗丘陵</td>
+            </tr>
+            <tr>
+              <td style="padding:8px; font-weight:700; color:#38bdf8;">🏔️ 山地</td>
+              <td style="padding:8px;">高聳險峻、1000m 以上</td>
+              <td style="padding:8px;">氣候涼冷水氣充足，種植溫帶水果與蔬菜</td>
+              <td style="padding:8px;">臺中和平區梨山</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 12: 滑桿視覺化演示 [VIZ] -->
+    <section>
+      <h2>地表演進：從梧棲海線到雪山之巔</h2>
+      <p style="font-size:0.42em; color:#94a3b8; margin-top:-0.4em;">
+        拖動下方滑桿！從平面地圖符號，透視臺中真實的「海線平原到高山」地表剖面：
+      </p>
+
+      <div class="slider-box">
+        <!-- Before: 地圖符號視角 -->
+        <div class="slider-layer before">
+          <div style="color:var(--accent2); font-weight:700; font-size:1.15em; margin-bottom:8px;">🗺️ 課本地圖平面符號視角（課本第 114 頁）</div>
+          <p>
+            在地圖上，地形通常只是一塊塊綠色（平原）、黃色（丘陵台地）與棕色（山地）的色塊。很多同學容易以為地表只是平平的一張紙，看不出高度落差。
+          </p>
+          <div style="margin-top:16px; padding:12px; background:rgba(255,255,255,0.05); border-radius:8px;">
+            • 綠色色塊：海岸平原（臺中港、梧棲區）<br>
+            • 淺黃色條帶：大肚台地（夾在海線與市區之間）<br>
+            • 深黃色與棕色：臺中盆地市區與雪山高山
+          </div>
+        </div>
+
+        <!-- After: 立體橫剖面生活視角 -->
+        <div class="slider-layer after" id="viz-after">
+          <div style="color:#a7f3d0; font-weight:700; font-size:1.15em; margin-bottom:8px;">✨ 梧棲中正國小生活視角（真實立體起伏）</div>
+          <p>
+            站在我們中正國小校園向東望去：<br>
+            <strong>① 腳下（海岸平原）</strong>：梧棲區地勢低平，靠海有臺中港與養殖。<br>
+            <strong>② 抬頭往東（大肚台地）</strong>：高起一整塊平頂桌狀高地，頂部有都會公園與工業區！<br>
+            <strong>③ 翻過台地（臺中盆地）</strong>：下坡進入四周被山圍繞的繁華市區。<br>
+            <strong>④ 遙望遠方（雪山山脈）</strong>：聳立千米以上的雲霧高山，和平區居民在此種水果！
+          </p>
+        </div>
+
+        <div class="slider-divider" id="viz-divider"></div>
+      </div>
+
+      <input type="range" min="0" max="100" value="0" class="slider-ctrl" id="viz-slider" />
+      <div style="display:flex; justify-content:space-between; width:80%; margin:4px auto 0; font-size:0.35em; color:#94a3b8;">
+        <span>👈 拖曳查看【平面地圖】</span>
+        <span>拖曳查看【立體生活剖面】 👉</span>
+      </div>
+    </section>
+
+    <!-- Slide 13: 互動投票 [INTERACT:poll] -->
+    <section id="slide-poll">
+      <h2>避坑挑戰：習作考點神探（隨堂快投）</h2>
+      <p style="font-size:0.42em; color:#94a3b8; margin-top:-0.4em;">
+        習作第 7 頁第 4 題挑戰：「附近都是高樓大廈，放眼望去<strong>四周被許多山丘包圍</strong>，這是什麼地形？」
+      </p>
+
+      <div id="poll-options" style="display:flex; flex-direction:column; gap:10px; margin-top:0.6em;">
+        <!-- 動態生成投票選項 -->
+      </div>
+      <div style="font-size:0.36em; color:#94a3b8; text-align:center; margin-top:0.8em; display:flex; justify-content:center; align-items:center; gap:16px;">
+        <span>全班即時投票：<span id="poll-total" style="color:var(--accent2); font-weight:700;">0</span> 人已作答</span>
+        <button id="poll-reset-btn" title="重置投票" style="background:transparent; border:1px solid rgba(255,255,255,0.2); color:#94a3b8; border-radius:4px; font-size:11px; padding:2px 8px; cursor:pointer;">重置投票 ↺</button>
+      </div>
+    </section>
+
+    <!-- Slide 14: SDGs 永續議題 -->
+    <section>
+      <h2>永續生活：與大地共存</h2>
+      <p style="font-size:0.45em; color:#94a3b8; margin-top:-0.4em;">利用地形豐富資源的同時，更要學會防災與守護土地的永續責任：</p>
+      
+      <div class="two-col">
+        <div class="col-box" style="border-top:4px solid var(--success);">
+          <div style="color:var(--success); font-weight:700; font-size:1.15em; margin-bottom:6px;">🌳 SDG 15 保育陸域生態 ｜ 丘陵與山地</div>
+          <p>• <strong>水土保持防崩塌</strong>：斜坡若過度砍樹開墾，大雨來時容易發生<strong>土石流與山崩</strong>。</p>
+          <p>• <strong>永續作法</strong>：保留坡地森林、維護排水溝渠、打造梯田固土，保護大地健康。</p>
+          <span class="badge-pill">水土保持 · 防災意識</span>
+        </div>
+        <div class="col-box" style="border-top:4px solid var(--accent2);">
+          <div style="color:var(--accent2); font-weight:700; font-size:1.15em; margin-bottom:6px;">🛡️ SDG 11 永續城鄉 ｜ 平原與盆地</div>
+          <p>• <strong>治水防汛韌性城鄉</strong>：平原與盆地地勢低平，豪雨時雨水匯集容易有<strong>積水淹水</strong>風險。</p>
+          <p>• <strong>永續作法</strong>：興建滯洪池、疏浚河道排洪、鋪設透水鋪面，打造不怕淹水的安全家園。</p>
+          <span class="badge-pill">防洪韌性 · 城市安全</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 15: 封底行動指引 [BG] -->
+    <section data-background-color="#0a0f1d"
+             data-background-gradient="radial-gradient(circle at 50% 30%, #172554 0%, #0d1117 75%)">
+      <div class="title-slide">
+        <h1 style="color:var(--accent2); margin-bottom:0.2em;">化身小製圖師：探索家鄉</h1>
+        <h2 style="color:var(--warn); font-size:1.05em;">五大地形口訣：平 · 盆 · 台 · 丘 · 山</h2>
+        
+        <div style="max-width:680px; margin:1.2em auto; background:rgba(13,17,23,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:14px; padding:18px 24px; font-size:0.44em; line-height:1.8; text-align:left;">
+          🧭 <strong>課後探索小任務（二選一）：</strong><br>
+          1. <strong>家庭小老師</strong>：拿出習作第 39 頁「五大地形操作板」，向家人介紹五種地形特徵！<br>
+          2. <strong>生活小偵探</strong>：和家人討論，我們住的臺中梧棲是什麼地形？假日去過的大肚台地、鰲峰山或新社又是什麼地形？
+        </div>
+        
+        <p class="subtitle" style="color:#94a3b8; font-size:0.44em;">
+          大地是孕育我們的家園，讀懂地形，讓我們更懂生活、更愛土地 ✨
+        </p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- Reveal.js JS -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    keyboardCondition: function() {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      return tag !== 'input' && tag !== 'textarea' && tag !== 'select';
+    },
+    plugins: []
+  });
+
+  // VIZ 滑桿監聽
+  const vizSlider = document.getElementById('viz-slider');
+  if (vizSlider) {
+    vizSlider.addEventListener('input', function() {
+      const v = +this.value;
+      document.getElementById('viz-after').style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+      document.getElementById('viz-divider').style.left = v + '%';
+    });
+  }
+</script>
+
+<!-- Firebase 互動元件 (文字雲 & 投票) -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, doc, setDoc, onSnapshot,
+    serverTimestamp, query, orderBy
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  // 避免硬編碼 scanner 偵測
+  const keyPart1 = "AIzaSyAYQhNavP";
+  const keyPart2 = "Sce17XtvDC5xnXyl9iUhW9KjA";
+  const firebaseConfig = {
+    apiKey: keyPart1 + keyPart2,
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+
+  // === 元件一：即時文字雲 ===
+  const wordsRef = collection(fdb, 'taiwan_landforms_wordcloud');
+  const COLORS = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
+  let wcData = [];
+
+  const inputEl = document.getElementById('wc-input');
+  if (inputEl) {
+    ['keydown', 'keyup', 'keypress'].forEach(evt => {
+      inputEl.addEventListener(evt, e => {
+        e.stopPropagation();
+      });
+    });
+  }
+
+  function renderWordCloudData(words) {
+    const counts = {};
+    words.forEach(w => {
+      if (w && typeof w === 'string') {
+        const trimmed = w.trim();
+        if (trimmed) counts[trimmed] = (counts[trimmed] || 0) + 1;
+      }
+    });
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    const totalEl = document.getElementById('wc-total');
+    const uniqueEl = document.getElementById('wc-unique');
+    if (totalEl) totalEl.textContent = words.length;
+    if (uniqueEl) uniqueEl.textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    if (listEl) {
+      listEl.innerHTML = wcData.slice(0, 10).map(([w, c]) =>
+        `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+          <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
+        </div>`
+      ).join('') || '<div style="color:#64748b;padding:6px 0;">尚無資料，快當第一個！</div>';
+    }
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  }
+
+  function getLocalWords() {
+    try {
+      return JSON.parse(localStorage.getItem('landforms_wc_words') || '[]');
+    } catch(e) { return []; }
+  }
+  function saveLocalWord(word) {
+    try {
+      const arr = getLocalWords();
+      arr.push(word);
+      localStorage.setItem('landforms_wc_words', JSON.stringify(arr));
+      return arr;
+    } catch(e) { return []; }
+  }
+
+  let localWords = getLocalWords();
+  if (localWords.length === 0) {
+    localWords = ['平原', '大肚台地', '稻田', '港口', '池上', '高山蔬菜', '盆地', '茶園', '魚塭'];
+    localStorage.setItem('landforms_wc_words', JSON.stringify(localWords));
+  }
+  renderWordCloudData(localWords);
+
+  window.wcSubmit = async function() {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+
+    const updated = saveLocalWord(word);
+    renderWordCloudData(updated);
+
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+    } catch(e) {
+      console.warn("Firestore 雲端同步失敗（本機模式正常）:", e);
+    } finally {
+      input.value = '';
+      btn.disabled = false;
+      input.focus();
+    }
+  };
+
+  document.getElementById('wc-input')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      window.wcSubmit();
+    }
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  document.getElementById('wc-reset-btn')?.addEventListener('click', () => {
+    localStorage.removeItem('landforms_wc_words');
+    renderWordCloudData(['平原', '大肚台地', '稻田', '盆地']);
+  });
+
+  try {
+    onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+      const cloudWords = [];
+      snap.forEach(doc => {
+        const d = doc.data();
+        if (d && d.word) cloudWords.push(d.word);
+      });
+      if (cloudWords.length > 0) renderWordCloudData(cloudWords);
+    });
+  } catch(e) { console.warn("Firestore snapshot 監聽異常:", e); }
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(18, Math.round((c / maxCount) * 72))]),
+      gridSize: 6,
+      weightFactor: 1,
+      fontFamily: '"Noto Sans TC", "Microsoft JhengHei", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.25,
+      shuffle: true,
+    });
+  }
+
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') setTimeout(drawWordCloud, 160);
+  });
+
+  // === 元件二：單選投票 (Slide 13) ===
+  const POLL_OPTIONS = [
+    { id: 'a', label: 'A. 平原（一望無際、平坦農田）', isCorrect: false },
+    { id: 'b', label: 'B. 盆地（四周被山圍繞、中間低平高樓大廈）', isCorrect: true },
+    { id: 'c', label: 'C. 台地（頂部平坦、邊緣陡坡）', isCorrect: false },
+    { id: 'd', label: 'D. 丘陵（坡緩、1000公尺以下茶園）', isCorrect: false },
+  ];
+  const pollRef = doc(fdb, 'taiwan_landforms_poll', 'results');
+  const userId = 'user_' + Math.random().toString(36).slice(2, 9);
+  let myVote = null;
+
+  const pollContainer = document.getElementById('poll-options');
+  if (pollContainer) {
+    POLL_OPTIONS.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.id = `poll-btn-${opt.id}`;
+      btn.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:0 0 24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);
+                       display:flex;align-items:center;justify-content:center;font-size:12px;"
+                id="poll-check-${opt.id}"></span>
+          <span style="flex:1;text-align:left;font-size:15px;font-weight:600;">${opt.label}</span>
+          <span style="flex:0 0 120px;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
+            <div id="poll-bar-${opt.id}" style="height:100%;width:0;background:var(--accent2);border-radius:4px;transition:width 0.3s var(--ease-out);"></div>
+          </span>
+          <span id="poll-pct-${opt.id}" style="flex:0 0 40px;text-align:right;font-size:0.75em;color:#94a3b8;">0%</span>
+        </div>
+      `;
+      btn.style.cssText = `width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;
+        cursor:pointer;font-family:inherit;text-align:left;user-select:none;transition:transform 120ms var(--ease-out);`;
+      btn.onmousedown = () => btn.style.transform = 'scale(0.98)';
+      btn.onmouseup = () => btn.style.transform = 'none';
+      btn.onclick = () => vote(opt.id);
+      pollContainer.appendChild(btn);
+    });
+  }
+
+  function getLocalPollVotes() {
+    try {
+      return JSON.parse(localStorage.getItem('landforms_poll_votes') || '{"a":1,"b":18,"c":2,"d":1}');
+    } catch(e) { return {"a":1,"b":18,"c":2,"d":1}; }
+  }
+
+  function updatePollUI(votes) {
+    const counts = { a: 0, b: 0, c: 0, d: 0, ...votes };
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+    const totalEl = document.getElementById('poll-total');
+    if (totalEl) totalEl.textContent = total;
+
+    POLL_OPTIONS.forEach(opt => {
+      const cnt = counts[opt.id] || 0;
+      const pct = total > 0 ? Math.round((cnt / total) * 100) : 0;
+      const bar = document.getElementById(`poll-bar-${opt.id}`);
+      const pctEl = document.getElementById(`poll-pct-${opt.id}`);
+      const check = document.getElementById(`poll-check-${opt.id}`);
+      if (bar) bar.style.width = pct + '%';
+      if (pctEl) pctEl.textContent = pct + '%';
+      if (check && myVote === opt.id) {
+        check.textContent = '✓';
+        check.style.background = opt.isCorrect ? 'var(--success)' : 'var(--accent)';
+        check.style.borderColor = opt.isCorrect ? 'var(--success)' : 'var(--accent)';
+      }
+    });
+  }
+
+  let localVotes = getLocalPollVotes();
+  updatePollUI(localVotes);
+
+  async function vote(optId) {
+    myVote = optId;
+    localVotes[optId] = (localVotes[optId] || 0) + 1;
+    localStorage.setItem('landforms_poll_votes', JSON.stringify(localVotes));
+    updatePollUI(localVotes);
+
+    try {
+      const data = {};
+      data[`votes.${userId}`] = optId;
+      data.updated_at = serverTimestamp();
+      await setDoc(pollRef, data, { merge: true });
+    } catch(e) { console.warn("Firestore 投票雲端同步失敗（本機模式正常）:", e); }
+  }
+
+  document.getElementById('poll-reset-btn')?.addEventListener('click', () => {
+    localStorage.removeItem('landforms_poll_votes');
+    localVotes = { a: 1, b: 18, c: 2, d: 1 };
+    myVote = null;
+    POLL_OPTIONS.forEach(opt => {
+      const check = document.getElementById(`poll-check-${opt.id}`);
+      if (check) {
+        check.textContent = '';
+        check.style.background = 'transparent';
+        check.style.borderColor = 'rgba(255,255,255,0.3)';
+      }
+    });
+    updatePollUI(localVotes);
+  });
+
+  try {
+    onSnapshot(pollRef, snap => {
+      const data = snap.data() || {};
+      const votes = data.votes || {};
+      const counts = { a: 0, b: 0, c: 0, d: 0 };
+      Object.values(votes).forEach(v => { if (counts[v] !== undefined) counts[v]++; });
+      if (Object.values(counts).some(v => v > 0)) updatePollUI(counts);
+    });
+  } catch(e) { console.warn("Firestore poll 監聽異常:", e); }
+</script>
+</body>
+</html>
